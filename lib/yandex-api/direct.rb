@@ -17,6 +17,7 @@ require_relative 'direct/base'
 
 require_relative 'direct/campaign'
 require_relative 'direct/bid'
+require_relative 'direct/ad'
 
 module Yandex
   module API

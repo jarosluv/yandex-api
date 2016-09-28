@@ -1,7 +1,7 @@
 module Yandex::API::Direct
   class SelectionCriteria
     protected
-    attr_accessor :selection_criteria, :field_names, :page_limit, :page_offset
+    attr_accessor :selection_criteria, :field_names, :text_ad_field_names, :page_limit, :page_offset
     public
     attr_accessor :object
     def initialize(object)
@@ -10,6 +10,10 @@ module Yandex::API::Direct
     end
     def fields(*field_names)
       self.field_names = Array(field_names)
+      self
+    end
+    def text_ad_fields(*field_names)
+      self.text_ad_field_names = Array(field_names)
       self
     end
     def limit(value)
@@ -38,6 +42,7 @@ module Yandex::API::Direct
           'SelectionCriteria' => (self.selection_criteria.nil? ? {} : self.selection_criteria),
       }
       params.merge!({'FieldNames' => Array(self.field_names).flatten.uniq}) unless self.field_names.nil?
+      params.merge!({'TextAdFieldNames' => Array(self.text_ad_field_names).flatten.uniq}) unless self.text_ad_field_names.nil?
       params.merge!({'Page' => {'Offset' => self.page_offset}}) if self.page_offset
       params.merge!({'Page' => {'Limit' => self.page_limit}}) if self.page_limit
       params
