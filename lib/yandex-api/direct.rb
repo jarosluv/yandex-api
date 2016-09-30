@@ -44,7 +44,8 @@ module Yandex
 
       def self.load(file, env = nil)
         @environment = env.to_s if env
-        config = YAML.load_file(file)
+
+        config = YAML.load(ERB.new(File.read(file)).result)
         @configuration = defined?(@environment) ? config[@environment] : config
         @configuration['sandbox'] ||= false
       end
